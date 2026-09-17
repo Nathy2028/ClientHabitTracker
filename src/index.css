@@ -1,0 +1,44 @@
+/* Habit Tracker base styles */
+:root {
+  --ink: #344d3b;
+  --text: #65776a;
+  --text-h: #344d3b;
+  --bg: #fff9e3;
+  --paper: #fffdf4;
+  --line: #c9d6bd;
+  --sage: #8bb08d;
+  --sage-dark: #4e8064;
+  --mint-light: #e5f0cf;
+  --coral: #d9775b;
+  --accent: #4e8064;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 16px/145% var(--sans);
+  letter-spacing: 0;
+  color-scheme: light;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+#root {
+  min-height: 100svh;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
