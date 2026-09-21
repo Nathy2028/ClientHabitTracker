@@ -5,19 +5,22 @@ interface HabitItemProps {
   onToggleComplete: (id: string) => void
   onEdit: (habit: Habit) => void
   onDelete: (id: string) => void
+  disabled: boolean
+  pendingAction: 'toggle' | 'delete' | null
 }
 
-function HabitItem({ habit, onToggleComplete, onEdit, onDelete }: HabitItemProps) {
+function HabitItem({ habit, onToggleComplete, onEdit, onDelete, disabled, pendingAction }: HabitItemProps) {
   return (
     <article className={`habit-item${habit.completed ? ' is-completed' : ''}`}>
       <button
         className="check-button"
         type="button"
         onClick={() => onToggleComplete(habit.id)}
+        disabled={disabled}
         aria-label={`${habit.completed ? 'Marcar como pendiente' : 'Marcar como completado'}: ${habit.name}`}
         aria-pressed={habit.completed}
       >
-        {habit.completed ? '✓' : ''}
+        {pendingAction === 'toggle' ? '...' : habit.completed ? '✓' : ''}
       </button>
       <div className="habit-content">
         <div className="habit-title-row">
@@ -27,8 +30,8 @@ function HabitItem({ habit, onToggleComplete, onEdit, onDelete }: HabitItemProps
         {habit.description && <p>{habit.description}</p>}
       </div>
       <div className="habit-actions">
-        <button className="icon-button" type="button" onClick={() => onEdit(habit)}>Editar</button>
-        <button className="icon-button danger" type="button" onClick={() => onDelete(habit.id)}>Eliminar</button>
+        <button className="icon-button" type="button" onClick={() => onEdit(habit)} disabled={disabled}>Editar</button>
+        <button className="icon-button danger" type="button" onClick={() => onDelete(habit.id)} disabled={disabled}>{pendingAction === 'delete' ? 'Eliminando...' : 'Eliminar'}</button>
       </div>
     </article>
   )

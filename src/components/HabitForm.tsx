@@ -4,11 +4,12 @@ import type { Habit, HabitInput } from '../types/Habit'
 
 interface HabitFormProps {
   habitToEdit?: Habit | null
-  onSubmit: (habitInput: HabitInput) => void
+  onSubmit: (habitInput: HabitInput) => Promise<void>
   onCancelEdit: () => void
+  disabled: boolean
 }
 
-function HabitForm({ habitToEdit, onSubmit, onCancelEdit }: HabitFormProps) {
+function HabitForm({ habitToEdit, onSubmit, onCancelEdit, disabled }: HabitFormProps) {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState('')
@@ -27,10 +28,13 @@ function HabitForm({ habitToEdit, onSubmit, onCancelEdit }: HabitFormProps) {
       setError('El nombre es obligatorio.')
       return
     }
-    onSubmit({ name: trimmedName, description: description.trim() })
-    setName('')
-    setDescription('')
-    setError('')
+    void onSubmit({ name: trimmedName, description: description.trim() })
+      .then(() => {
+        setName('')
+        setDescription('')
+        setError('')
+      })
+      .catch(() => undefined)
   }
 
   function handleCancel() {
@@ -54,6 +58,7 @@ function HabitForm({ habitToEdit, onSubmit, onCancelEdit }: HabitFormProps) {
         id="habit-name"
         type="text"
         value={name}
+        disabled={disabled}
         onChange={(event) => setName(event.target.value)}
         placeholder="Ej. Leer 20 minutos"
         aria-invalid={Boolean(error)}
@@ -64,13 +69,14 @@ function HabitForm({ habitToEdit, onSubmit, onCancelEdit }: HabitFormProps) {
         id="habit-description"
         value={description}
         onChange={(event) => setDescription(event.target.value)}
+        disabled={disabled}
         placeholder="¿Qué quieres conseguir con esta rutina?"
         rows={3}
       />
       {error && <p className="form-error" id="habit-name-error">{error}</p>}
       <div className="form-actions">
-        {isEditing && <button className="button button-ghost" type="button" onClick={handleCancel}>Cancelar</button>}
-        <button className="button button-primary" type="submit">{isEditing ? 'Guardar cambios' : 'Añadir hábito'}</button>
+        {isEditing && <button className="button button-ghost" type="button" onClick={handleCancel} disabled={disabled}>Cancelar</button>}
+        <button className="button button-primary" type="submit" disabled={disabled}>{disabled ? 'Guardando...' : isEditing ? 'Guardar cambios' : 'Añadir hábito'}</button>
       </div>
     </form>
   )
