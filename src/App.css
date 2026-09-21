@@ -69,6 +69,12 @@ textarea:focus { border-color: var(--sage-dark); outline: 3px solid rgba(49, 99,
 .button-primary:hover { background: #244d3d; }
 .button-ghost { color: var(--muted); background: transparent; }
 .form-error { margin-top: 8px; color: #c34e3d; font-size: .75rem; }
+.form-success { margin-top: 8px; color: var(--sage-dark); font-size: .75rem; }
+.button:disabled,
+.icon-button:disabled,
+.check-button:disabled { cursor: wait; opacity: .55; }
+.button:disabled:hover,
+.icon-button:disabled:hover { text-decoration: none; }
 .list-heading { justify-content: space-between; gap: 16px; margin-bottom: 22px; }
 .habit-count { padding: 7px 10px; color: var(--sage-dark); background: var(--mint-light); font-size: .7rem; font-weight: 900; text-transform: uppercase; }
 .habit-items { display: grid; gap: 0; }
